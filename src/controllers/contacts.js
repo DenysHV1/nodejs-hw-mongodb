@@ -56,13 +56,34 @@ export const getContactByIdController = async (req, res) => {
 
 //* POST
 export const createContactController = async (req, res) => {
-  const { body } = req;
-  const userId = req.user._id;
-  const contact = await createContact(body, userId);
+  const { body, user, file } = req;
+  const contact = await createContact({ ...body, photo: file }, user._id);
 
   res.status(201).json({
     status: 201,
     message: `Successfully created a contact!`,
+    data: contact,
+  });
+};
+
+//* PATCH
+export const patchContactController = async (req, res) => {
+  const { params, body, file, user } = req;
+  const contactId = params.contactId;
+
+  const contact = await updateContact(
+    contactId,
+    { ...body, photo: file },
+    user._id,
+  );
+
+  if (!contact) {
+    throw createHttpError(404, 'Contact not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully patched a contact!`,
     data: contact,
   });
 };
@@ -78,21 +99,4 @@ export const deleteContactController = async (req, res) => {
   }
 
   res.status(204).send();
-};
-
-//* PATCH
-export const patchContactController = async (req, res) => {
-  const id = req.params.contactId;
-  const userId = req.user._id;
-  const contact = await updateContact(id, req.body, userId);
-
-  if (!contact) {
-    throw createHttpError(404, 'Contact not found');
-  }
-
-  res.status(200).json({
-    status: 200,
-    message: `Successfully patched a contact!`,
-    data: contact,
-  });
 };

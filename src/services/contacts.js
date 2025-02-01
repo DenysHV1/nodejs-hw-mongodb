@@ -1,5 +1,6 @@
 import ContactsCollection from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+import { saveFile } from '../utils/saveFile.js';
 
 //* GET
 export const getAllContacts = async ({
@@ -51,20 +52,37 @@ export const getContactById = async (id, userId) => {
 };
 
 //* POST
-export const createContact = async (payload, userId) => {
-  return await ContactsCollection.create({ ...payload, userId });
+export const createContact = async ({ photo, ...payload }, userId) => {
+  let url = null;
+
+  if (photo) {
+    url = await saveFile(photo);
+  }
+
+  return await ContactsCollection.create({ ...payload, userId, photo: url });
+};
+
+//* PATCH
+export const updateContact = async (
+  contactId,
+  { photo, ...payload },
+  userId
+) => {
+  let updatedData = { ...payload };
+
+  if (photo) {
+    const url = await saveFile(photo);
+    updatedData.photo = url;
+  }
+
+  return await ContactsCollection.findOneAndUpdate(
+    { _id: contactId, userId },
+    updatedData,
+    { new: true }
+  );
 };
 
 //* DELETE
 export const deleteContact = async (id, userId) => {
   return await ContactsCollection.findOneAndDelete({ _id: id, userId });
-};
-
-//* PATCH
-export const updateContact = async (id, payload, userId) => {
-  return await ContactsCollection.findOneAndUpdate(
-    { _id: id, userId },
-    payload,
-    { new: true }
-  );
 };
