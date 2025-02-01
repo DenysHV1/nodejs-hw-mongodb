@@ -4,9 +4,11 @@ import pino from 'pino-http';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
-import router from './routes/index.js';
+import rootRouter from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+
+import { UPLOAD_DIR } from './constants/index.js';
 
 const setupServer = () => {
   const app = express();
@@ -26,7 +28,9 @@ const setupServer = () => {
     })
   );
 
-  app.use(router);
+  app.use('/uploads', express.static(UPLOAD_DIR));
+
+  app.use(rootRouter);
 
   app.use('*', notFoundHandler);
 
