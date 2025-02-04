@@ -19,7 +19,7 @@ export const getAllContacts = async ({
     contactsQuery.where('contactType').equals(filter.type);
   }
 
-  if (filter.isFavourite) {
+  if (filter.isFavourite !== null) {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
 
@@ -47,10 +47,7 @@ export const getContactById = async (userId, contactId) => {
 };
 
 export const createContact = async (userId, payload) => {
-  const contact = await ContactsCollection.create({
-    ...payload,
-    userId: userId,
-  });
+  const contact = await ContactsCollection.create({ ...payload, userId });
   return contact;
 };
 
