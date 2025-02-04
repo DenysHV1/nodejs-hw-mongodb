@@ -5,14 +5,18 @@ export const createValidateScheme = Joi.object({
   phoneNumber: Joi.string().min(3).max(20).required(),
   email: Joi.string().min(3).max(20),
   isFavourite: Joi.boolean().default(false),
-  contactType: Joi.string().valid('work', 'home', 'personal').default('personal').required()
+  contactType: Joi.string()
+    .valid('work', 'home', 'personal')
+    .default('personal')
+    .required(),
 });
-
 
 export const updateValidateSchema = Joi.object({
   name: Joi.string().min(3).max(20),
   phoneNumber: Joi.string().min(3).max(20),
   email: Joi.string().min(3).max(20),
   isFavourite: Joi.boolean().default(false),
-  contactType: Joi.string().valid('work', 'home', 'personal').default('personal')
+  contactType: Joi.string()
+    .valid('work', 'home', 'personal')
+    .default('personal'),
 });
