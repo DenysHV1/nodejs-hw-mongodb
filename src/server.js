@@ -16,10 +16,8 @@ const setupServer = () => {
   const PORT = Number(process.env.PORT);
 
   app.use(express.json());
-
   app.use(cors());
   app.use(cookieParser());
-
   app.use(
     pino({
       transport: {
@@ -29,11 +27,9 @@ const setupServer = () => {
   );
 
   app.use('/uploads', express.static(UPLOAD_DIR));
-
   app.use(rootRouter);
 
   app.use('*', notFoundHandler);
-
   app.use(errorHandler);
 
   app.listen(PORT, () => {
