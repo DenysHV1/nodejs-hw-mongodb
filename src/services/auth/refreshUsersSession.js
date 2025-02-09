@@ -8,7 +8,7 @@ import { FIFTEEN_MINUTES, ONE_DAY } from '../../constants/index.js';
 //models
 import { SessionsCollection } from '../../db/models/session.js';
 
-const createSession = () => {
+export const createSession = () => {
   const accessToken = randomBytes(30).toString('base64');
   const refreshToken = randomBytes(30).toString('base64');
 
