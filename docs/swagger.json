@@ -499,7 +499,7 @@
           "photo": {
             "description": "Link to contact's photo",
             "type": "string",
-            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+            "example": "https://res-console.cloudinary.com/dikjtales/thumbnails/v1/image/upload/v1738702049/cXBma2F6cHZ4NmFvbXdiYmo4cXM=/drilldown"
           }
         }
       }
