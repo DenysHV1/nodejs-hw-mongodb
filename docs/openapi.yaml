@@ -11,8 +11,7 @@ tags:
     description: Operations about users.
 
 servers:
-  - url: http://localhost:3000
-  - url: https://nodejs-hw-mongodb-contacts-list.onrender.com
+  - url: https://nodejs-hw-mongodb-eobz.onrender.com
 
 paths:
   /contacts:
